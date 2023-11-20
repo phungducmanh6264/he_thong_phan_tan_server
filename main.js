@@ -36,11 +36,13 @@ const myIpOnLan = GetIPOnLan();
 const REQ_FAILED = "failed";
 const REQ_SUCCESS = "success";
 
-setInterval(() => {
-  if (ipDispatcherServer) {
-    getAllServerIp(ipDispatcherServer);
-  }
-}, 500);
+// setInterval(() => {
+//   if (ipDispatcherServer) {
+//     TestConnect2DispatcherHost(ipDispatcherServer)
+//       .then((r) => {})
+//       .catch((e) => {});
+//   }
+// }, 500);
 
 http
   .createServer(function (req, res) {
