@@ -22,7 +22,7 @@ const getAllServerIp = (ipDispatcher) => {
   return sendHttpRequestPromise(_options);
 };
 
-const InitDispatcherServerIP = (ipDispatcher) => {
+const TestConnect2DispatcherHost = (ipDispatcher) => {
   const _options = {
     hostname: ipDispatcher,
     path: "/test-connect",
@@ -35,4 +35,4 @@ const InitDispatcherServerIP = (ipDispatcher) => {
 
 exports.initServer = initServer;
 exports.getAllServerIp = getAllServerIp;
-exports.InitDispatcherServerIP = InitDispatcherServerIP;
+exports.TestConnect2DispatcherHost = TestConnect2DispatcherHost;
