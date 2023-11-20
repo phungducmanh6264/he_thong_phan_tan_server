@@ -40,7 +40,7 @@ setInterval(() => {
   if (ipDispatcherServer) {
     getAllServerIp(ipDispatcherServer);
   }
-}, 1000);
+}, 500);
 
 http
   .createServer(function (req, res) {
