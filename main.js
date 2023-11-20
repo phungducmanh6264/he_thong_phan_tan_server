@@ -5,7 +5,11 @@ const {
   initServer,
   TestConnect2DispatcherHost,
 } = require("./dispatcher/index");
-const { addRequest, responseRequest } = require("./method/methodForOrther");
+const {
+  addRequest,
+  responseRequest,
+  responseAllOrtherRequest,
+} = require("./method/methodForOrther");
 const {
   updateMyRequest,
   allReady2CS,
@@ -27,7 +31,7 @@ let ortherRequests = [];
 let serverStatus = -1;
 let ipDispatcherServer = "";
 let ipAllServer = [];
-const ipOnLan = GetIPOnLan();
+const myIpOnLan = GetIPOnLan();
 
 const REQ_FAILED = "failed";
 const REQ_SUCCESS = "success";
@@ -64,6 +68,7 @@ http
             .then((r) => {
               initServer(_dispatcherIp)
                 .then((r) => {
+                  serverStatus = 0;
                   res.end(REQ_SUCCESS);
                 })
                 .catch((e) => {
@@ -84,7 +89,7 @@ http
           .then((r) => {
             ipAllServer = JSON.parse(r);
             const _info = {
-              serverIp: ipOnLan,
+              serverIp: myIpOnLan,
               serverStatus: serverStatus,
               ipAllServer: ipAllServer,
               myRequests: myRequests,
@@ -99,13 +104,19 @@ http
       }
       case "/send-request": {
         serverStatus = 1;
-        myRequests = sendRequest2AllServer(ipAllServer);
+        if (ipAllServer.length === 1) {
+          serverStatus = 2;
+        } else {
+          myRequests = sendRequest2AllServer(myIpOnLan, ipAllServer);
+        }
         res.end(REQ_SUCCESS);
         break;
       }
       case "/cs-exit": {
         serverStatus = 0;
-        responseAllOrtherRequest(ortherRequests);
+        if (ortherRequests?.length > 0)
+          responseAllOrtherRequest(ortherRequests);
+        res.end(REQ_SUCCESS);
         break;
       }
       // xử lý các request được gửi đến

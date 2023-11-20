@@ -57,10 +57,11 @@ const sendRequest2CS2Host = (hostname) => {
   return _request;
 };
 
-const sendRequest2AllServer = (serverList) => {
+const sendRequest2AllServer = (myIP, serverList) => {
   const _requests = [];
   for (let i = 0; i < serverList.length; i++) {
     const _host = serverList[i];
+    if (_host == myIP) continue;
     const _request = sendRequest2CS2Host(_host);
     _requests.push(_request);
   }
