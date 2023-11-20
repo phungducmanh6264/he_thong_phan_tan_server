@@ -120,7 +120,7 @@ http
         serverStatus = 0;
         if (ortherRequests?.length > 0) {
           console.log(ortherRequests);
-          responseAllOrtherRequest(ortherRequests);
+          ortherRequests = responseAllOrtherRequest(ortherRequests);
         }
         res.end(REQ_SUCCESS);
         break;
@@ -134,6 +134,11 @@ http
 
         if (serverStatus === 0) {
           responseRequest(_hostname);
+          ortherRequests.push({
+            hostname: _hostname,
+            timestamp: parseInt(_timestamp),
+            status: 1,
+          });
           res.end(REQ_SUCCESS);
         } else {
           ortherRequests.push({

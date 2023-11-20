@@ -40,7 +40,10 @@ const responseAllOrtherRequest = (requests) => {
     const _request = requests[i];
     const _hostname = _request["hostname"];
     responseRequest(_hostname);
+    requests[i].status = 1;
   }
+
+  return requests;
 };
 
 exports.addRequest = addRequest;
