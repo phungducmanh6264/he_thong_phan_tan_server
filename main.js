@@ -36,6 +36,12 @@ const myIpOnLan = GetIPOnLan();
 const REQ_FAILED = "failed";
 const REQ_SUCCESS = "success";
 
+setInterval(() => {
+  if (ipDispatcherServer) {
+    getAllServerIp(ipDispatcherServer);
+  }
+}, 1000);
+
 http
   .createServer(function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*"); // Cho phép tất cả các origin
