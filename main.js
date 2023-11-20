@@ -69,6 +69,7 @@ http
               initServer(_dispatcherIp)
                 .then((r) => {
                   serverStatus = 0;
+                  ipDispatcherServer = _dispatcherIp;
                   res.end(REQ_SUCCESS);
                 })
                 .catch((e) => {
@@ -124,6 +125,7 @@ http
         // `/cs-request?timestamp=${_timestamp}`
         const _timestamp = query.timestamp;
         const _hostname = hostname;
+        console.log(`request by: ${_hostname}`);
 
         if (serverStatus === -1) res.end(REQ_FAILED);
 
@@ -139,6 +141,7 @@ http
       // xử lý khi được response 1 request
       case "/cs-response": {
         const _hostname = hostname;
+        console.log(`response by ${_hostname}`);
         updateMyRequest(myRequests, _hostname);
         if (allReady2CS(myRequests, ipAllServer)) {
           serverStatus = 2;

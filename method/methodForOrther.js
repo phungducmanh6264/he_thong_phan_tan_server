@@ -1,3 +1,5 @@
+const http = require("http");
+
 const addRequest = (requestList, { hostname, timestamp }) => {
   requestList.push({ hostname, timestamp });
   requestList.sort(function (a, b) {
