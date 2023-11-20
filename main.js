@@ -46,7 +46,7 @@ http
     const _url = req.url;
     const urlObject = url.parse(_url, true);
     const pathName = urlObject.pathname;
-    const hostname = req.socket.remoteAddress;
+    const hostname = req.socket.remoteAddress.replace("::ffff:", "");
     const query = urlObject.query;
 
     if (
@@ -62,6 +62,9 @@ http
     switch (pathName) {
       // init this server to dispatcher +++ step1
       case "/init-server": {
+        serverStatus = -1;
+        myRequests = [];
+        ortherRequests = [];
         try {
           const _dispatcherIp = query.ip;
           TestConnect2DispatcherHost(_dispatcherIp)
@@ -115,8 +118,10 @@ http
       }
       case "/cs-exit": {
         serverStatus = 0;
-        if (ortherRequests?.length > 0)
+        if (ortherRequests?.length > 0) {
+          console.log(ortherRequests);
           responseAllOrtherRequest(ortherRequests);
+        }
         res.end(REQ_SUCCESS);
         break;
       }
@@ -125,15 +130,17 @@ http
         // `/cs-request?timestamp=${_timestamp}`
         const _timestamp = query.timestamp;
         const _hostname = hostname;
-        console.log(`request by: ${_hostname}`);
-
         if (serverStatus === -1) res.end(REQ_FAILED);
 
         if (serverStatus === 0) {
           responseRequest(_hostname);
           res.end(REQ_SUCCESS);
         } else {
-          addRequest(ortherRequests, { _hostname, _timestamp });
+          ortherRequests.push({
+            hostname: _hostname,
+            timestamp: parseInt(_timestamp),
+            status: 0,
+          });
           res.end(REQ_SUCCESS);
         }
         break;

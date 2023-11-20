@@ -1,8 +1,8 @@
 const http = require("http");
 const os = require("os");
 
-const allReady2CS = (myRequests, ipAllServer) => {
-  if (myRequests.length === ipAllServer.length) {
+const allReady2CS = (myRequests) => {
+  if (myRequests.length) {
     let _responseAll = true;
     for (let i = 0; i < myRequests.length; i++) {
       const _element = myRequests[i];
@@ -60,7 +60,7 @@ const sendRequest2CS2Host = (hostname) => {
 const sendRequest2AllServer = (myIP, serverList) => {
   const _requests = [];
   for (let i = 0; i < serverList.length; i++) {
-    const _host = serverList[i];
+    const _host = serverList[i].hostname;
     if (_host == myIP) continue;
     const _request = sendRequest2CS2Host(_host);
     _requests.push(_request);
@@ -70,8 +70,7 @@ const sendRequest2AllServer = (myIP, serverList) => {
 
 const updateMyRequest = (myRequest, hostname) => {
   for (let i = 0; i < myRequest.length; i++) {
-    const _element = myRequest[i];
-    if (_element.hostname == hostname) {
+    if (myRequest[i].hostname == hostname) {
       myRequest[i].status = 1;
     }
   }
