@@ -16,7 +16,8 @@ const GetIPOnLan = () => {
       }
     }
   }
-  return results["Wi-Fi"][0];
+  if (results["Wi-Fi"]) return results["Wi-Fi"][0];
+  if (results["ens33"]) return results["ens33"][0];
 };
 
 exports.GetIPOnLan = GetIPOnLan;
