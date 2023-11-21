@@ -4,6 +4,7 @@ const {
   getAllServerIp,
   initServer,
   TestConnect2DispatcherHost,
+  setServerStatus,
 } = require("./dispatcher/index");
 const {
   addRequest,
@@ -130,6 +131,7 @@ http
           console.log(ortherRequests);
           ortherRequests = responseAllOrtherRequest(ortherRequests);
         }
+        setServerStatus(ipDispatcherServer, 1);
         res.end(REQ_SUCCESS);
         break;
       }
@@ -165,6 +167,7 @@ http
         updateMyRequest(myRequests, _hostname);
         if (allReady2CS(myRequests, ipAllServer)) {
           serverStatus = 2;
+          setServerStatus(ipDispatcherServer, 2);
         }
         res.end(REQ_SUCCESS);
         break;

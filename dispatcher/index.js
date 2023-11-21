@@ -33,6 +33,18 @@ const TestConnect2DispatcherHost = (ipDispatcher) => {
   return sendHttpRequestPromise(_options);
 };
 
+const setServerStatus = (ipDispatcher, status) => {
+  const _options = {
+    hostname: ipDispatcher,
+    port: 8888,
+    path: `/status-server?status=${status}`,
+    method: "GET",
+  };
+
+  return sendHttpRequestPromise(_options);
+};
+
 exports.initServer = initServer;
 exports.getAllServerIp = getAllServerIp;
 exports.TestConnect2DispatcherHost = TestConnect2DispatcherHost;
+exports.setServerStatus = setServerStatus;
