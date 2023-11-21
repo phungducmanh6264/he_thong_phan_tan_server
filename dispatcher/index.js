@@ -11,11 +11,11 @@ const initServer = (ipDispatcher) => {
   return sendHttpRequestPromise(_options);
 };
 
-const getAllServerIp = (ipDispatcher) => {
+const getAllServerIp = (ipDispatcher, myStatus) => {
   const _options = {
     hostname: ipDispatcher,
     port: 8888,
-    path: "/get-all-ip",
+    path: `/get-all-ip?status=${myStatus}`,
     method: "GET",
   };
 
@@ -25,20 +25,9 @@ const getAllServerIp = (ipDispatcher) => {
 const TestConnect2DispatcherHost = (ipDispatcher) => {
   const _options = {
     hostname: ipDispatcher,
-    path: "/test-connect",
+    path: `/test-connect`,
     method: "GET",
     port: 8888,
-  };
-
-  return sendHttpRequestPromise(_options);
-};
-
-const setServerStatus = (ipDispatcher, status) => {
-  const _options = {
-    hostname: ipDispatcher,
-    port: 8888,
-    path: `/status-server?status=${status}`,
-    method: "GET",
   };
 
   return sendHttpRequestPromise(_options);
@@ -47,4 +36,3 @@ const setServerStatus = (ipDispatcher, status) => {
 exports.initServer = initServer;
 exports.getAllServerIp = getAllServerIp;
 exports.TestConnect2DispatcherHost = TestConnect2DispatcherHost;
-exports.setServerStatus = setServerStatus;

@@ -37,6 +37,8 @@ const myIpOnLan = GetIPOnLan();
 const REQ_FAILED = "failed";
 const REQ_SUCCESS = "success";
 
+let statusWhenTestConnect = 1;
+
 // setInterval(() => {
 //   if (ipDispatcherServer) {
 //     TestConnect2DispatcherHost(ipDispatcherServer)
@@ -98,7 +100,7 @@ http
       }
       // get all server ip info
       case "/get-info": {
-        getAllServerIp(ipDispatcherServer)
+        getAllServerIp(ipDispatcherServer, statusWhenTestConnect)
           .then((r) => {
             ipAllServer = JSON.parse(r);
             const _info = {
@@ -131,7 +133,7 @@ http
           console.log(ortherRequests);
           ortherRequests = responseAllOrtherRequest(ortherRequests);
         }
-        setServerStatus(ipDispatcherServer, 1);
+        statusWhenTestConnect = 1;
         res.end(REQ_SUCCESS);
         break;
       }
@@ -167,7 +169,7 @@ http
         updateMyRequest(myRequests, _hostname);
         if (allReady2CS(myRequests, ipAllServer)) {
           serverStatus = 2;
-          setServerStatus(ipDispatcherServer, 2);
+          statusWhenTestConnect = 2;
         }
         res.end(REQ_SUCCESS);
         break;
