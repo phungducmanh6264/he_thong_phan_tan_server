@@ -38,9 +38,11 @@ const responseRequest = (hostname) => {
 const responseAllOrtherRequest = (requests) => {
   for (let i = 0; i < requests.length; i++) {
     const _request = requests[i];
-    const _hostname = _request["hostname"];
-    responseRequest(_hostname);
-    requests[i].status = 1;
+    if (_request.status === 0) {
+      const _hostname = _request["hostname"];
+      responseRequest(_hostname);
+      requests[i].status = 1;
+    }
   }
 
   return requests;
