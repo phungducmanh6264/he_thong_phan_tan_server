@@ -23,8 +23,8 @@ const allReady2CS = (myRequests) => {
 //   timestamp: _timestamp,
 //   status: 0
 // }
-const sendRequest2CS2Host = (hostname) => {
-  const _timestamp = Date.now();
+const sendRequest2CS2Host = (hostname, timestamp) => {
+  const _timestamp = timestamp;
 
   const _request = {
     hostname: hostname,
@@ -57,12 +57,12 @@ const sendRequest2CS2Host = (hostname) => {
   return _request;
 };
 
-const sendRequest2AllServer = (myIP, serverList) => {
+const sendRequest2AllServer = (myIP, serverList, timestamp) => {
   const _requests = [];
   for (let i = 0; i < serverList.length; i++) {
     const _host = serverList[i].hostname;
     if (_host == myIP) continue;
-    const _request = sendRequest2CS2Host(_host);
+    const _request = sendRequest2CS2Host(_host, timestamp);
     _requests.push(_request);
   }
   return _requests;
